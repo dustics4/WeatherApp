@@ -1,0 +1,61 @@
+body {
+
+    font-family: Arial, sans-serif;
+
+    background-color: #f4f4f4;
+
+    background-image: url('https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+
+    background-size: cover;
+
+    margin: 0;
+
+    padding: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    height: 100vh;
+
+}
+
+h1 {
+
+    margin-top: 0;
+
+    background-color: #fff;
+
+    border-radius: 8px;
+
+    padding: 20px;
+
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+
+    text-align: center;
+
+}
+
+#location, #weather {
+
+    background-color: #fff;
+
+    border-radius: 8px;
+
+    padding: 20px;
+
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+
+    text-align: center;
+
+}
+
+#weather {
+
+    margin-top: 20px;
+
+}

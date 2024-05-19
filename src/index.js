@@ -22,3 +22,44 @@
 //fetch weather
 //display error
 //function to reset . resets form
+
+
+// <------------ Fetching API request ----------------->//
+
+const generalInfoDiv = document.querySelector('.general-info');
+
+fetch('https://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae205606241905&q=london', {mode: 'cors'})
+    .then(function(response){
+        console.log(response.json);
+    })
+    .then(function(response){
+        console.log(response);
+    })
+
+function fetchWeather(city, country){
+    
+    const apiKey = "b8dd374dfd494fd880a213332241805";
+
+    const apiUrl = `http://api.weatherstack.com/current?access_key=8ee0f6a8d54b4bf7aae205606241905&query=${city},${country}`;
+
+    fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+        if(data.success != undefined && data.success === false){
+            throw new Error(data.error.info)
+        }
+        const temperature = data.current.temperature;
+        const weatherDescription = data.current.weather_descriptions[0];
+        const weatherElement = document.getElementById('weather');
+        const generalInfoDiv = document.querySelector('.general-info');
+
+
+        weatherElement.textContent = `Weather in ${city}, ${country}: ${weatherDescription}, Temperature: ${temperature}°C`
+    })
+    .catch(error => {
+        console.error('Error fetching weather data:', error);
+    });
+   
+}
+
+fetchWeather("london", "united kingdom");
