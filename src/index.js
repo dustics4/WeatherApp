@@ -38,9 +38,9 @@ fetch('https://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae2056062
 
 function fetchWeather(city, country){
     
-    const apiKey = "b8dd374dfd494fd880a213332241805";
+    const apiKey = "8ee0f6a8d54b4bf7aae205606241905";
 
-    const apiUrl = `http://api.weatherstack.com/current?access_key=8ee0f6a8d54b4bf7aae205606241905&query=${city},${country}`;
+    const apiUrl = `https://api.weatherapi.com/v1/current.json?${apiKey}&q=${city}`;
 
     fetch(apiUrl)
     .then(response => response.json())
