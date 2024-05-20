@@ -28,12 +28,15 @@
 
 const generalInfoDiv = document.querySelector('.general-info');
 
-fetch('https://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae205606241905&q=london', {mode: 'cors'})
+fetch('http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae205606241905&q=London&aqi=no')
     .then(function(response){
-        console.log(response.json);
+       return response.json();
     })
-    .then(function(response){
-        console.log(response);
+    .then(function(data){
+        console.log(data);
+    })
+    .catch(function(err){
+        console.error("Error fetching weather data" , err);
     })
 
 function fetchWeather(city){
@@ -42,18 +45,18 @@ function fetchWeather(city){
 
     const apiUrl = `https://api.weatherapi.com/v1/current.json?${apiKey}&q=${city}`;
 
-    fetch(apiUrl)
+    fetch("http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae205606241905&q=London&aqi=no")
     .then(response => response.json())
     .then(data => {
         if(data.success != undefined && data.success === false){
             throw new Error(data.error.info)
         }
         
-        const weatherElement = document.getElementById('weather');
+        const weatherElement = document.getElementById('location');
         const generalInfoDiv = document.querySelector('.general-info');
+        console.log(data.location.name);
 
-
-        weatherElement.textContent = `Weather in ${city},   °C`
+        weatherElement.textContent = `Weather in ${data.location.name},   °C`
     })
     .catch(error => {
         console.error('Error fetching weather data:', error);
