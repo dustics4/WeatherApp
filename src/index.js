@@ -36,7 +36,7 @@ fetch('https://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae2056062
         console.log(response);
     })
 
-function fetchWeather(city, country){
+function fetchWeather(city){
     
     const apiKey = "8ee0f6a8d54b4bf7aae205606241905";
 
@@ -48,13 +48,12 @@ function fetchWeather(city, country){
         if(data.success != undefined && data.success === false){
             throw new Error(data.error.info)
         }
-        const temperature = data.current.temperature;
-        const weatherDescription = data.current.weather_descriptions[0];
+        
         const weatherElement = document.getElementById('weather');
         const generalInfoDiv = document.querySelector('.general-info');
 
 
-        weatherElement.textContent = `Weather in ${city}, ${country}: ${weatherDescription}, Temperature: ${temperature}°C`
+        weatherElement.textContent = `Weather in ${city},   °C`
     })
     .catch(error => {
         console.error('Error fetching weather data:', error);
@@ -62,4 +61,4 @@ function fetchWeather(city, country){
    
 }
 
-fetchWeather("london", "united kingdom");
+fetchWeather("london");
