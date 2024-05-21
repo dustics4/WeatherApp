@@ -54,7 +54,7 @@ function fetchWeather(city){
         console.log(data.location.name);
         
         weatherCondition.textContent = `Condition : ${data.current.condition.text}`;
-        weatherLocation.textContent = `Weather in ${data.location.name}, ${data.location.country} °C`
+        weatherLocation.textContent = `Weather in ${data.location.name}, ${data.location.country}`
         weatherDegrees.textContent = `${data.current.temp_c} °C`
     })
     .catch(error => {
