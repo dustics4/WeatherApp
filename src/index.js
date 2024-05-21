@@ -16,12 +16,10 @@
 
 
 //functions like
-//getweather data
-//processData
-//display Data
-//fetch weather
-//display error
-//function to reset . resets form
+//store objects like weather location etc
+//create a function for searching
+//take users input for search
+//use async await.
 
 
 // <------------ Fetching API request ----------------->//
@@ -41,22 +39,23 @@ fetch('http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae20560624
 
 function fetchWeather(city){
     
-    const apiKey = "8ee0f6a8d54b4bf7aae205606241905";
+    const apiUrl = `http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae205606241905&q=${city}&aqi=no`;
 
-    const apiUrl = `https://api.weatherapi.com/v1/current.json?${apiKey}&q=${city}`;
-
-    fetch("http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae205606241905&q=London&aqi=no")
+    fetch(apiUrl)
     .then(response => response.json())
     .then(data => {
         if(data.success != undefined && data.success === false){
             throw new Error(data.error.info)
         }
         
-        const weatherElement = document.getElementById('location');
-        const generalInfoDiv = document.querySelector('.general-info');
+        const weatherLocation = document.querySelector('.location');
+        const weatherCondition = document.querySelector('.condition');
+        const weatherDegrees = document.querySelector('.degrees');
         console.log(data.location.name);
-
-        weatherElement.textContent = `Weather in ${data.location.name},   °C`
+        
+        weatherCondition.textContent = `Condition : ${data.current.condition.text}`;
+        weatherLocation.textContent = `Weather in ${data.location.name}, ${data.location.country} °C`
+        weatherDegrees.textContent = `${data.current.temp_c} °C`
     })
     .catch(error => {
         console.error('Error fetching weather data:', error);
@@ -64,4 +63,4 @@ function fetchWeather(city){
    
 }
 
-fetchWeather("london");
+fetchWeather("London");
