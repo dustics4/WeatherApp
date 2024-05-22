@@ -38,7 +38,6 @@ fetch('http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae20560624
     })
 
 async function fetchWeather(city){
-    
     const apiUrl = `http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae205606241905&q=${city}&aqi=no`;
 
     fetch(apiUrl)
@@ -51,11 +50,17 @@ async function fetchWeather(city){
         const weatherLocation = document.querySelector('.location');
         const weatherCondition = document.querySelector('.condition');
         const weatherDegrees = document.querySelector('.degrees');
-        console.log(data.location.name);
+        const weatherFeelsLike = document.querySelector('.feels-like');
+        const weatherWindMph = document.querySelector('.wind-mph');
+        const weatherHumidity = document.querySelector('.humidity');
+
         
         weatherCondition.textContent = `Condition : ${data.current.condition.text}`;
         weatherLocation.textContent = `Weather in ${data.location.name}, ${data.location.country}`
         weatherDegrees.textContent = `${data.current.temp_c} °C`
+        weatherFeelsLike.textContent = `Feels like: ${data.current.feelslike_c} °C`
+        weatherWindMph.textContent = `Wind : ${data.current.wind_kph} Km/h`
+        weatherHumidity.textContent = `Humidity : ${data.current.humidity}`
     })
     .catch(error => {
         console.error('Error fetching weather data:', error);
@@ -63,4 +68,4 @@ async function fetchWeather(city){
    
 }
 
-fetchWeather("London");
+fetchWeather("london");
