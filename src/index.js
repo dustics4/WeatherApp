@@ -71,6 +71,15 @@ async function fetchWeather(city){
    
 }
 
+async function getWeather(city){
+    const endpoint = `http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae205606241905&q=${city}&aqi=no`;
+    try {
+        const resolution = await fetch(endpoint, {mode: "cors"});
+        if(!response.ok) throw new Error(`City ${city} is not found`)
+    }
+
+}
+
 submitButton.addEventListener("click" , async () => {
     if(searchInput.value === "")return;
     fetchWeather(searchInput.value);
