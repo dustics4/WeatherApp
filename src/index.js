@@ -71,11 +71,26 @@ async function fetchWeather(city){
    
 }
 
+const weather = (() => {
+    function convertData(data){
+        const {
+            city: cityName,
+            main: {cond: condition, temp: temperature, feels_like: feelslike, wind, humidity}
+        } = data;
+        return {cityName, condition, temperature, feelslike, wind, humidity}
+    }
+})
+
 async function getWeather(city){
     const endpoint = `http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae205606241905&q=${city}&aqi=no`;
     try {
         const resolution = await fetch(endpoint, {mode: "cors"});
-        if(!response.ok) throw new Error(`City ${city} is not found`)
+        if(!response.ok) throw new Error(`City ${city} is not found`);
+        const data = convertData(await response.json());
+        return data;
+    }catch(error){
+        alert(error);
+        return null;
     }
 
 }
