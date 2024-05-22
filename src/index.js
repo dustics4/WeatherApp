@@ -37,6 +37,10 @@ fetch('http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae20560624
         console.error("Error fetching weather data" , err);
     })
 
+
+let searchInput = document.querySelector('.searchBar');
+let submitButton = document.querySelector('.submit-btn');
+
 async function fetchWeather(city){
     const apiUrl = `http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae205606241905&q=${city}&aqi=no`;
 
@@ -46,7 +50,6 @@ async function fetchWeather(city){
         if(data.success != undefined && data.success === false){
             throw new Error(data.error.info)
         }
-        
         const weatherLocation = document.querySelector('.location');
         const weatherCondition = document.querySelector('.condition');
         const weatherDegrees = document.querySelector('.degrees');
@@ -68,4 +71,7 @@ async function fetchWeather(city){
    
 }
 
-fetchWeather("london");
+submitButton.addEventListener("click" , async () => {
+    if(searchInput.value === "")return;
+    fetchWeather(searchInput.value);
+})
