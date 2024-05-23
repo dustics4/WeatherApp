@@ -35,13 +35,53 @@ fetch('http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae20560624
     })
     .catch(function(err){
         console.error("Error fetching weather data" , err);
+})
+
+
+async function getWeatherData(city){
+    const response = await fetch(`http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae205606241905&q=${city}&aqi=no`, {mode: "cors"});
+    if(response.ok){
+        const weatherData = await response.json();
+        return weatherData;
+    }else{
+        return Promise.reject("Enter a valid location");
+    }
+}
+
+function capitalizeFirstLetter(str){
+    return str.toLowerCase().replace(/\b\w/g, function(char){
+        return char.toUpperCase();
     })
+}
 
+function setCustomeWeather(value){
+    const weatherData = getWeatherData(capitalizeFirstLetter(value));
+    weatherData.then((data) => {
+        const searchResult = document.querySelector('#main-weather-display');
+        searchResult.classList.add("active");
 
+        const weatherLocation = document.querySelector('.location');
+        const weatherCondition = document.querySelector('.condition');
+        const weatherDegrees = document.querySelector('.degrees');
+        const weatherFeelsLike = document.querySelector('.feels-like');
+        const weatherWindMph = document.querySelector('.wind-mph');
+        const weatherHumidity = document.querySelector('.humidity');
+
+        
+        weatherCondition.textContent = `Condition : ${data.current.condition.text}`;
+        weatherLocation.textContent = `Weather in ${data.location.name}, ${data.location.country}`
+        weatherDegrees.textContent = `${data.current.temp_c} °C`
+        weatherFeelsLike.textContent = `Feels like: ${data.current.feelslike_c} °C`
+        weatherWindMph.textContent = `Wind : ${data.current.wind_kph} Km/h`
+        weatherHumidity.textContent = `Humidity : ${data.current.humidity}`
+    }).catch((err) => {
+        alert(err);
+    })
+}
 
 
 async function fetchWeather(city){
-    const apiUrl = `http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae205606241905&q=${city}&aqi=no`;
+    const apiUrl = await `http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae205606241905&q=${city}&aqi=no`;
 
     fetch(apiUrl)
     .then(response => response.json())
@@ -49,6 +89,10 @@ async function fetchWeather(city){
         if(data.success != undefined && data.success === false){
             throw new Error(data.error.info)
         }
+
+        const searchResult = document.querySelector('#main-weather-display');
+        searchResult.classList.add("active");
+
         const weatherLocation = document.querySelector('.location');
         const weatherCondition = document.querySelector('.condition');
         const weatherDegrees = document.querySelector('.degrees');
@@ -71,36 +115,18 @@ async function fetchWeather(city){
 }
 
 
-function setSearchResult(weatherData){
-    if(!weatherData) return;
-
-    const searchResult = document.querySelector('#main-weather-display');
-    searchResult.classList.add("active");
-
-    const weatherLocation = document.querySelector('.location');
-    const weatherCondition = document.querySelector('.condition');
-    const weatherDegrees = document.querySelector('.degrees');
-    const weatherFeelsLike = document.querySelector('.feels-like');
-    const weatherWindMph = document.querySelector('.wind-mph');
-    const weatherHumidity = document.querySelector('.humidity');
-
-    weatherCondition.textContent = `Condition : ${data.current.condition.text}`;
-    weatherLocation.textContent = `Weather in ${data.location.name}, ${data.location.country}`
-    weatherDegrees.textContent = `${data.current.temp_c} °C`
-    weatherFeelsLike.textContent = `Feels like: ${data.current.feelslike_c} °C`
-    weatherWindMph.textContent = `Wind : ${data.current.wind_kph} Km/h`
-    weatherHumidity.textContent = `Humidity : ${data.current.humidity}`
-}
-
 
 let searchInput = document.querySelector('.searchBar');
 let submitButton = document.querySelector('.submit-btn');
 
 
 
-submitButton.addEventListener("click" , async () => {
-    if(searchInput.value === "")return;
-    console.log("Hello");
-    const weatherData = await fetchWeather(searchInput.value);
-    view.setSearchResult(weatherData);
+submitButton.addEventListener("click" ,  () => {
+    //if(searchInput.value === "")return;
+    console.log("hello world");
+    setCustomeWeather(searchInput.value);
+})
+
+document.addEventListener("DOMContentLoaded" , () =>{
+    setCustomeWeather("London");
 })
