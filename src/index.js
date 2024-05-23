@@ -40,23 +40,6 @@ fetch('http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae20560624
         console.error("Error fetching weather data" , err);
 })
 
-function setWeatherIcon(object){
-    weatherIcon = object.conditon.icon;
-}
-
-function setCustomWeather(value){
-    const weatherData = getWeatherData(capitalizeFirstLetter(value));
-
-    weatherData.then((data) => {
-         //const locationDetails = data.location;
-        const currentConditions = data.current;
-        const setWeatherIcon = currentConditions.icon;
-        weatherData = setWeatherIcon;
-       
-        setWeatherIcon(currentConditions);
-    })
-}
-
 async function getWeatherData(city){
     const response = await fetch(`http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae205606241905&q=${city}&aqi=no`, {mode: "cors"});
     if(response.ok){
