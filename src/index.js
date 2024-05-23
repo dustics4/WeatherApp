@@ -27,6 +27,7 @@
 const generalInfoDiv = document.querySelector('.general-info');
 const searchInput = document.querySelector('.searchBar');
 const submitButton = document.querySelector('.submit-btn');
+const weatherIcon = document.querySelector('.image');
 
 fetch('http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae205606241905&q=London&aqi=no')
     .then(function(response){
@@ -38,6 +39,23 @@ fetch('http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae20560624
     .catch(function(err){
         console.error("Error fetching weather data" , err);
 })
+
+function setWeatherIcon(object){
+    weatherIcon = object.conditon.icon;
+}
+
+function setCustomWeather(value){
+    const weatherData = getWeatherData(capitalizeFirstLetter(value));
+
+    weatherData.then((data) => {
+         //const locationDetails = data.location;
+        const currentConditions = data.current;
+        const setWeatherIcon = currentConditions.icon;
+        weatherData = setWeatherIcon;
+       
+        setWeatherIcon(currentConditions);
+    })
+}
 
 async function getWeatherData(city){
     const response = await fetch(`http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae205606241905&q=${city}&aqi=no`, {mode: "cors"});
@@ -75,12 +93,11 @@ function setCustomeWeather(value){
         weatherFeelsLike.textContent = `Feels like: ${data.current.feelslike_c} °C`
         weatherWindMph.textContent = `Wind : ${data.current.wind_kph} Km/h`
         weatherHumidity.textContent = `Humidity : ${data.current.humidity}`
+        weatherIcon.src = data.current.condition.icon;
     }).catch((err) => {
         alert(err);
     })
 }
-
-
 
 submitButton.addEventListener("click" ,  (e) => {
     e.preventDefault();
