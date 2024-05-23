@@ -25,6 +25,8 @@
 // <------------ Fetching API request ----------------->//
 
 const generalInfoDiv = document.querySelector('.general-info');
+const searchInput = document.querySelector('.searchBar');
+const submitButton = document.querySelector('.submit-btn');
 
 fetch('http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae205606241905&q=London&aqi=no')
     .then(function(response){
@@ -36,7 +38,6 @@ fetch('http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae20560624
     .catch(function(err){
         console.error("Error fetching weather data" , err);
 })
-
 
 async function getWeatherData(city){
     const response = await fetch(`http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae205606241905&q=${city}&aqi=no`, {mode: "cors"});
@@ -80,49 +81,10 @@ function setCustomeWeather(value){
 }
 
 
-async function fetchWeather(city){
-    const apiUrl = await `http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae205606241905&q=${city}&aqi=no`;
 
-    fetch(apiUrl)
-    .then(response => response.json())
-    .then(data => {
-        if(data.success != undefined && data.success === false){
-            throw new Error(data.error.info)
-        }
-
-        const searchResult = document.querySelector('#main-weather-display');
-        searchResult.classList.add("active");
-
-        const weatherLocation = document.querySelector('.location');
-        const weatherCondition = document.querySelector('.condition');
-        const weatherDegrees = document.querySelector('.degrees');
-        const weatherFeelsLike = document.querySelector('.feels-like');
-        const weatherWindMph = document.querySelector('.wind-mph');
-        const weatherHumidity = document.querySelector('.humidity');
-
-        
-        weatherCondition.textContent = `Condition : ${data.current.condition.text}`;
-        weatherLocation.textContent = `Weather in ${data.location.name}, ${data.location.country}`
-        weatherDegrees.textContent = `${data.current.temp_c} °C`
-        weatherFeelsLike.textContent = `Feels like: ${data.current.feelslike_c} °C`
-        weatherWindMph.textContent = `Wind : ${data.current.wind_kph} Km/h`
-        weatherHumidity.textContent = `Humidity : ${data.current.humidity}`
-    })
-    .catch(error => {
-        console.error('Error fetching weather data:', error);
-    });
-   
-}
-
-
-
-let searchInput = document.querySelector('.searchBar');
-let submitButton = document.querySelector('.submit-btn');
-
-
-
-submitButton.addEventListener("click" ,  () => {
-    //if(searchInput.value === "")return;
+submitButton.addEventListener("click" ,  (e) => {
+    e.preventDefault();
+    if(searchInput.value === "")return;
     console.log("hello world");
     setCustomeWeather(searchInput.value);
 })
