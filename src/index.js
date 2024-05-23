@@ -75,27 +75,59 @@ const weather = (() => {
     function convertData(data){
         const {
             city: cityName,
-            main: {cond: condition, temp: temperature, feels_like: feelslike, wind, humidity}
-        } = data;
+            cond: condition, 
+            temp: temperature, 
+            feels_like: feelslike, 
+            wind, 
+            humidity
+        }= data;
         return {cityName, condition, temperature, feelslike, wind, humidity}
+    }
+
+    async function getWeather(city){
+        console.log("Hello");
+        const endpoint = `http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae205606241905&q=${city}&aqi=no`;
+        try {
+            const response = await fetch(endpoint, {mode: "cors"});
+            if(!response.ok) throw new Error(`City ${city} is not found`);
+            const data = convertData(await response.json());
+            return data;
+        }catch(error){
+            alert(error);
+            return null;
+        }
+    }return {getWeather};
+})
+
+const view = (() => {
+    function setSearchResult(weatherData){
+        if(!weatherData) return;
+
+        const searchResult = document.querySelector('#main-weather-display');
+        searchResult.classList.add("active");
+
+        const weatherLocation = document.querySelector('.location');
+        const weatherCondition = document.querySelector('.condition');
+        const weatherDegrees = document.querySelector('.degrees');
+        const weatherFeelsLike = document.querySelector('.feels-like');
+        const weatherWindMph = document.querySelector('.wind-mph');
+        const weatherHumidity = document.querySelector('.humidity');
+
+        weatherCondition.textContent = `Condition : ${data.current.condition.text}`;
+        weatherLocation.textContent = `Weather in ${data.location.name}, ${data.location.country}`
+        weatherDegrees.textContent = `${data.current.temp_c} °C`
+        weatherFeelsLike.textContent = `Feels like: ${data.current.feelslike_c} °C`
+        weatherWindMph.textContent = `Wind : ${data.current.wind_kph} Km/h`
+        weatherHumidity.textContent = `Humidity : ${data.current.humidity}`
     }
 })
 
-async function getWeather(city){
-    const endpoint = `http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae205606241905&q=${city}&aqi=no`;
-    try {
-        const resolution = await fetch(endpoint, {mode: "cors"});
-        if(!response.ok) throw new Error(`City ${city} is not found`);
-        const data = convertData(await response.json());
-        return data;
-    }catch(error){
-        alert(error);
-        return null;
-    }
 
-}
+
+
 
 submitButton.addEventListener("click" , async () => {
     if(searchInput.value === "")return;
-    fetchWeather(searchInput.value);
+    const weatherData = await weather.getWeather(searchInput.value);
+
 })
