@@ -40,6 +40,7 @@ fetch('http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae20560624
         console.error("Error fetching weather data" , err);
 })
 
+
 async function getWeatherData(city){
     const response = await fetch(`http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae205606241905&q=${city}&aqi=no`, {mode: "cors"});
     if(response.ok){
@@ -54,6 +55,11 @@ function capitalizeFirstLetter(str){
     return str.toLowerCase().replace(/\b\w/g, function(char){
         return char.toUpperCase();
     })
+}
+
+function clearSearch(){
+    searchInput.value = "";
+
 }
 
 function setCustomeWeather(value){
@@ -85,8 +91,8 @@ function setCustomeWeather(value){
 submitButton.addEventListener("click" ,  (e) => {
     e.preventDefault();
     if(searchInput.value === "")return;
-    console.log("hello world");
     setCustomeWeather(searchInput.value);
+    clearSearch();
 })
 
 document.addEventListener("DOMContentLoaded" , () =>{
