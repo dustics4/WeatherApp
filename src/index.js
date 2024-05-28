@@ -74,6 +74,7 @@ function setCustomeWeather(value){
         const weatherFeelsLike = document.querySelector('.feels-like');
         const weatherWindMph = document.querySelector('.wind-mph');
         const weatherHumidity = document.querySelector('.humidity');
+        const currentCondition = data.current;
 
         
         weatherCondition.textContent = `Condition : ${data.current.condition.text}`;
