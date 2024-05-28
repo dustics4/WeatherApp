@@ -16,6 +16,47 @@ body {
 
 }
 
+/* <------- Header Section --------> */
+
+header {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+}
+
+
+.switch-degrees {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#toggleButton {
+    border-radius: 1.4rem;
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.celsius {
+    background-color: #1b3d1c; /* Green for Celsius */
+    color: white;
+}
+
+.fahrenheit {
+    background-color: #2196F3; /* Blue for Fahrenheit */
+    color: white;
+}
+
+  /* <------- Body Section --------> */
+
+
 h1 {
     margin-top: 0;
 

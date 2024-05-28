@@ -28,6 +28,7 @@ const generalInfoDiv = document.querySelector('.general-info');
 const searchInput = document.querySelector('.searchBar');
 const submitButton = document.querySelector('.submit-btn');
 const weatherIcon = document.querySelector('.image');
+const toggleButton = document.getElementById('toggleButton');
 
 fetch('http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae205606241905&q=London&aqi=no')
     .then(function(response){
@@ -80,7 +81,8 @@ function setCustomeWeather(value){
         weatherCondition.textContent = `Condition : ${data.current.condition.text}`;
         weatherLocation.textContent = `Weather in ${data.location.name}, ${data.location.country}`
         weatherDegrees.textContent = `${data.current.temp_c} °C`
-        weatherFeelsLike.textContent = `Feels like: ${data.current.feelslike_c} °C`
+        toggleDegrees(currentCondition);
+        toggleSwitchEvent(currentCondition);
         weatherWindMph.textContent = `Wind : ${data.current.wind_kph} Km/h`
         weatherHumidity.textContent = `Humidity : ${data.current.humidity}`
         weatherIcon.src = data.current.condition.icon;
@@ -88,6 +90,31 @@ function setCustomeWeather(value){
         alert(err);
     })
 }
+
+function toggleDegrees(obj){
+    const weatherFeelsLike = document.querySelector('.feels-like');
+    toggleButton.classList.add('celsius');
+
+        if (toggleButton.textContent === '°C') {
+            weatherFeelsLike.textContent = `Feels like: ${obj.feelslike_c} °C`
+            console.log(weatherFeelsLike.textContent = `Feels like: ${obj.feelslike_c} °C`)
+            
+            toggleButton.classList.remove('fahrenheit');
+            toggleButton.classList.add('celsius');
+        } else {
+            toggleButton.textContent = '°C';
+            weatherFeelsLike.textContent = `Feels like: ${obj.feelslike_f} °F`
+            toggleButton.classList.remove('celsius');
+            toggleButton.classList.add('fahrenheit'); 
+        }
+}
+
+function toggleSwitchEvent(obj){
+    toggleButton.addEventListener("click", () =>{
+        toggleDegrees(obj);
+    })
+}
+
 
 submitButton.addEventListener("click" ,  (e) => {
     e.preventDefault();
