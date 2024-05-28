@@ -80,7 +80,7 @@ function setCustomeWeather(value){
         
         weatherCondition.textContent = `Condition : ${data.current.condition.text}`;
         weatherLocation.textContent = `Weather in ${data.location.name}, ${data.location.country}`
-        weatherDegrees.textContent = `${data.current.temp_c} °C`
+       
         toggleDegrees(currentCondition);
         toggleSwitchEvent(currentCondition);
         weatherWindMph.textContent = `Wind : ${data.current.wind_kph} Km/h`
@@ -93,19 +93,22 @@ function setCustomeWeather(value){
 
 function toggleDegrees(obj){
     const weatherFeelsLike = document.querySelector('.feels-like');
+    const weatherDegrees = document.querySelector('.degrees');
     toggleButton.classList.add('celsius');
 
         if (toggleButton.textContent === '°C') {
-            weatherFeelsLike.textContent = `Feels like: ${obj.feelslike_c} °C`
-            console.log(weatherFeelsLike.textContent = `Feels like: ${obj.feelslike_c} °C`)
-            
-            toggleButton.classList.remove('fahrenheit');
-            toggleButton.classList.add('celsius');
+            toggleButton.textContent = '°F';
+            weatherDegrees.textContent = `${obj.temp_f} °F`
+            weatherFeelsLike.textContent = `Feels like: ${obj.feelslike_f} °F`
+            console.log(weatherFeelsLike.textContent = `Feels like: ${obj.feelslike_f} °F`)
+            toggleButton.classList.add('fahrenheit'); 
+            toggleButton.classList.remove('celsius');
         } else {
             toggleButton.textContent = '°C';
-            weatherFeelsLike.textContent = `Feels like: ${obj.feelslike_f} °F`
-            toggleButton.classList.remove('celsius');
-            toggleButton.classList.add('fahrenheit'); 
+            weatherFeelsLike.textContent = `Feels like: ${obj.feelslike_c} °C`
+            weatherDegrees.textContent = `${obj.temp_c} °C`
+            toggleButton.classList.add('celsius');
+            toggleButton.classList.remove('fahrenheit');  
         }
 }
 
