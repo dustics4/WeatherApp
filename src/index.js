@@ -30,6 +30,8 @@ const submitButton = document.querySelector('.submit-btn');
 const weatherIcon = document.querySelector('.image');
 const toggleButton = document.getElementById('toggleButton');
 
+let isCelsius = true;
+
 fetch('http://api.weatherapi.com/v1/current.json?key=8ee0f6a8d54b4bf7aae205606241905&q=London&aqi=no')
     .then(function(response){
        return response.json();
@@ -63,7 +65,7 @@ function clearSearch(){
 
 }
 
-function setCustomeWeather(value){
+function setCustomWeather(value){
     const weatherData = getWeatherData(capitalizeFirstLetter(value));
     weatherData.then((data) => {
         const searchResult = document.querySelector('#main-weather-display');
@@ -81,8 +83,7 @@ function setCustomeWeather(value){
         weatherCondition.textContent = `Condition : ${data.current.condition.text}`;
         weatherLocation.textContent = `Weather in ${data.location.name}, ${data.location.country}`
        
-        toggleDegrees(currentCondition);
-        toggleSwitchEvent(currentCondition);
+        updateWeatherDisplay(currentCondition);
         weatherWindMph.textContent = `Wind : ${data.current.wind_kph} Km/h`
         weatherHumidity.textContent = `Humidity : ${data.current.humidity}`
         weatherIcon.src = data.current.condition.icon;
@@ -91,12 +92,12 @@ function setCustomeWeather(value){
     })
 }
 
-function toggleDegrees(obj){
+function updateWeatherDisplay(obj){
     const weatherFeelsLike = document.querySelector('.feels-like');
     const weatherDegrees = document.querySelector('.degrees');
     toggleButton.classList.add('celsius');
 
-        if (toggleButton.textContent === '°C') {
+        if (isCelsius) {
             toggleButton.textContent = '°F';
             weatherDegrees.textContent = `${obj.temp_f} °F`
             weatherFeelsLike.textContent = `Feels like: ${obj.feelslike_f} °F`
@@ -110,11 +111,19 @@ function toggleDegrees(obj){
             toggleButton.classList.add('celsius');
             toggleButton.classList.remove('fahrenheit');  
         }
+        toggleButton.setAttribute('data-condition', JSON.stringify(obj));
 }
 
-function toggleSwitchEvent(obj){
-    toggleButton.addEventListener("click", () =>{
-        toggleDegrees(obj);
+function toggleDegrees(){
+    isCelsius = !isCelsius;
+    const currentCondition = JSON.parse(toggleButton.getAttribute('data-condition'));
+    updateWeatherDisplay(currentCondition);
+}
+
+function toggleSwitchEvent(){
+    toggleButton.addEventListener("click", (e) =>{
+        e.preventDefault();
+        toggleDegrees();
     })
 }
 
@@ -122,10 +131,11 @@ function toggleSwitchEvent(obj){
 submitButton.addEventListener("click" ,  (e) => {
     e.preventDefault();
     if(searchInput.value === "")return;
-    setCustomeWeather(searchInput.value);
+    setCustomWeather(searchInput.value);
     clearSearch();
 })
 
 document.addEventListener("DOMContentLoaded" , () =>{
-    setCustomeWeather("London");
+    setCustomWeather("London");
+    toggleSwitchEvent();
 })
