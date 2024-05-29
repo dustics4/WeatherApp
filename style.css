@@ -18,7 +18,7 @@ body {
 /* <------- Header Section --------> */
 
 header {
-    background-color: rgba(0, 0, 0, 0.8);
+    background: linear-gradient(90deg, rgba(56, 120, 231, 0.726) 0%, rgba(96, 175, 204, 0.151) 64%, rgba(0, 64, 255, 0.589) 90%);
     padding: 10px;
     display: flex;
     justify-content: space-evenly;
@@ -168,9 +168,6 @@ header {
 
   /* <------- Body Section --------> */
 
-  .main-container {
-    
-  }
 
 .main-weather-display {
     min-height: 80vh;
@@ -182,20 +179,22 @@ header {
 }
 
 .image {
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
     margin-top : 0px;
+}
+
+.degreese-together-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 40px;
 }
 
 h1 {
     margin-top: 0;
-
     border-radius: 8px;
-
-    padding: 10px;
-
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-
 }
 
 
@@ -208,56 +207,63 @@ h1 {
 .location {
     color: #fff;
     padding-top: 10px;
-    padding-bottom: 10px;
     margin-top: 0;
     border-radius: 8px;
-    padding: 10px;
     font-size: 1.5rem;
     font-family: "Roboto", sans-serif;
     font-weight: 400;
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .degrees {
-    padding-top: 10px;
-    padding-bottom: 10px;
     color: #fff;
     font-size: 4rem;
 }
 
 
 #main-weather-display {
-    background-color:rgba(0, 0, 0, 0.26) ;
-    width: 1000px;
+    background: linear-gradient(90deg, rgba(56,121,231,1) 0%, rgba(96,176,204,1) 64%, rgba(0,65,255,1) 96%);
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 20px;
     flex-direction: row;
-    border-radius: 4rem;
+    border-radius: 2rem;
     font-family: "Roboto", sans-serif;
     font-weight: 400;
 }
 
 .general-info{
+    padding-top: 10px;
+    padding-bottom: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 10px;
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    width: 400px;
     border-radius: 2rem;
     text-align: center;
-    background-color: rgba(196, 212, 137, 0.021);
+    background-color: #00000083;
 }
 
 .weather-details {
     border-radius: 2rem;
+    margin-right: 10px;
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.014);
     width: 300px;
     text-align:center ;
-    background-color: rgba(196, 212, 137, 0.034);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
+}
+
+.weather-details p {
+    font-size: 1.6rem;
+    background-color: #00000083;
+    margin-top: 10px;
+    border-radius: 2rem;
 }
 
 .feels-like {
@@ -286,7 +292,7 @@ h1 {
     flex-direction: row;
     border-radius: 2rem;
     gap: 10px;
-    background-color: #2f3130cb;
+    background-color: #00000096;
 }
 
 .submit-btn {
