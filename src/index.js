@@ -101,7 +101,6 @@ function updateWeatherDisplay(obj){
             toggleButton.textContent = '°F';
             weatherDegrees.textContent = `${obj.temp_f} °F`
             weatherFeelsLike.textContent = `Feels like: ${obj.feelslike_f} °F`
-            console.log(weatherFeelsLike.textContent = `Feels like: ${obj.feelslike_f} °F`)
             toggleButton.classList.add('fahrenheit'); 
             toggleButton.classList.remove('celsius');
         } else {
@@ -126,6 +125,17 @@ function toggleSwitchEvent(){
         toggleDegrees();
     })
 }
+
+
+function checkedBoxFuction(){
+    if(document.querySelector('.checkbox').checked === true){
+        console.log("C");
+    }else{
+        console.log("F");
+    }
+}
+
+checkedBoxFuction()
 
 
 submitButton.addEventListener("click" ,  (e) => {
