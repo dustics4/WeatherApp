@@ -29,6 +29,7 @@ const searchInput = document.querySelector('.searchBar');
 const submitButton = document.querySelector('.submit-btn');
 const weatherIcon = document.querySelector('.image');
 const toggleButton = document.getElementById('toggleButton');
+const checkbox = document.getElementById('checkbox');
 
 let isCelsius = true;
 
@@ -83,7 +84,7 @@ function setCustomWeather(value){
         weatherCondition.textContent = `Condition : ${data.current.condition.text}`;
         weatherLocation.textContent = `Weather in ${data.location.name}, ${data.location.country}`
        
-        updateWeatherDisplay(currentCondition);
+        checkedBoxFuction(currentCondition);
         weatherWindMph.textContent = `Wind : ${data.current.wind_kph} Km/h`
         weatherHumidity.textContent = `Humidity : ${data.current.humidity}`
         weatherIcon.src = data.current.condition.icon;
@@ -92,7 +93,7 @@ function setCustomWeather(value){
     })
 }
 
-function updateWeatherDisplay(obj){
+/*function updateWeatherDisplay(obj){
     const weatherFeelsLike = document.querySelector('.feels-like');
     const weatherDegrees = document.querySelector('.degrees');
     toggleButton.classList.add('celsius');
@@ -110,32 +111,38 @@ function updateWeatherDisplay(obj){
             toggleButton.classList.add('celsius');
             toggleButton.classList.remove('fahrenheit');  
         }
-        toggleButton.setAttribute('data-condition', JSON.stringify(obj));
-}
+        checkbox.setAttribute('data-condition', JSON.stringify(obj));
+}*/
 
 function toggleDegrees(){
     isCelsius = !isCelsius;
-    const currentCondition = JSON.parse(toggleButton.getAttribute('data-condition'));
-    updateWeatherDisplay(currentCondition);
+    const currentCondition = JSON.parse(checkbox.getAttribute('data-condition'));
+    checkedBoxFuction(currentCondition);
 }
 
 function toggleSwitchEvent(){
-    toggleButton.addEventListener("click", (e) =>{
+    checkbox.addEventListener("change", (e) =>{
         e.preventDefault();
         toggleDegrees();
     })
 }
 
 
-function checkedBoxFuction(){
-    if(document.querySelector('.checkbox').checked === true){
-        console.log("C");
-    }else{
-        console.log("F");
-    }
-}
+function checkedBoxFuction(obj){
+    const weatherFeelsLike = document.querySelector('.feels-like');
+    const weatherDegrees = document.querySelector('.degrees');
 
-checkedBoxFuction()
+        if(checkbox.checked){
+            console.log("Checked");
+            weatherDegrees.textContent = `${obj.temp_f} °F`
+            weatherFeelsLike.textContent = `Feels like: ${obj.feelslike_f} °F`
+        }else{
+            console.log("unchecked");
+            weatherFeelsLike.textContent = `Feels like: ${obj.feelslike_c} °C`
+            weatherDegrees.textContent = `${obj.temp_c} °C`
+        }
+        checkbox.setAttribute('data-condition', JSON.stringify(obj));
+}
 
 
 submitButton.addEventListener("click" ,  (e) => {

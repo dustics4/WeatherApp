@@ -57,7 +57,7 @@ header {
     display: table-cell;
     position: relative;
     width: 150px;
-    height: 140px;
+    height: 0px;
     box-sizing: border-box;
   }
   
@@ -179,7 +179,6 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.8);
 }
 
 .image {
