@@ -12,7 +12,7 @@ body {
 
     padding: 0;
 
-    height: 100vh;
+    min-height: 100vh;
 }
 
 /* <------- Header Section --------> */
@@ -169,11 +169,11 @@ header {
   /* <------- Body Section --------> */
 
   .main-container {
-    width: 100%;
-    display: flex;
+    
   }
 
 .main-weather-display {
+    min-height: 80vh;
     padding-top: 50px;
     display: flex;
     flex-direction: column;
@@ -182,8 +182,8 @@ header {
 }
 
 .image {
-    width: 140px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     margin-top : 0px;
 }
 
@@ -198,34 +198,23 @@ h1 {
 
 }
 
-.general-info{
-    padding: 10px;
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-    width: 500px;
-    text-align: center;
-    background-color: rgba(0, 0, 0, 0.8);
 
-}
 
 .condition {
-    padding-top: 10px;
-    padding-bottom: 10px;
     color: #fff;
-    font-size: 2rem;
-    font-weight: 600;
+    font-size: 1.5rem;
 }
 
 .location {
     color: #fff;
     padding-top: 10px;
     padding-bottom: 10px;
-
     margin-top: 0;
-
     border-radius: 8px;
-
     padding: 10px;
-
+    font-size: 1.5rem;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -233,17 +222,42 @@ h1 {
     padding-top: 10px;
     padding-bottom: 10px;
     color: #fff;
-    font-size: 4.5rem;
-    font-weight: 500;
+    font-size: 4rem;
+}
+
+
+#main-weather-display {
+    background-color:rgba(0, 0, 0, 0.26) ;
+    width: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-direction: row;
+    border-radius: 4rem;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+}
+
+.general-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    border-radius: 2rem;
+    text-align: center;
+    background-color: rgba(196, 212, 137, 0.021);
 }
 
 .weather-details {
-    padding: 10px;
-
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-    width: 500px;
+    border-radius: 2rem;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.014);
+    width: 300px;
     text-align:center ;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(196, 212, 137, 0.034);
 }
 
 .feels-like {
@@ -251,7 +265,6 @@ h1 {
     padding-bottom: 10px;
     color: #fff;
     font-size: 2rem;
-    font-weight: 600;
 }
 
 .wind-mph {
@@ -259,7 +272,6 @@ h1 {
     padding-bottom: 10px;
     color: #fff;
     font-size: 2rem;
-    font-weight: 600;
 }
 
 .humidity{
@@ -267,7 +279,6 @@ h1 {
     padding-bottom: 10px;
     color: #fff;
     font-size: 2rem;
-    font-weight: 600;
 }
 
 .form-group {
@@ -293,4 +304,9 @@ h1 {
     padding: 6px;
     background-color: #2f313000;
     outline: none;
+}
+
+p {
+    margin: 0;
+    padding: 0;
 }
