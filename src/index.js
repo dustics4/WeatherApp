@@ -1,29 +1,3 @@
-//Go through what you need, create a checklist
-//When working with API's go through the previous project you made to display gifs
-//explain how you can use smaller functions like the below to make it easer and more understandable code
-//Learn how to implement weather API in to your code
-//research functions how to use them again
-
-//need to get some icons
-//start with simple
-// then move to harder functions
-// as an easy exercise to start
-// create a function, that can take a location and return weather data from that location
-//console log the information
-
-
-//learn how to implement loading, at the end.
-
-
-//functions like
-//store objects like weather location etc
-//create a function for searching
-//take users input for search
-//use async await.
-
-
-// <------------ Fetching API request ----------------->//
-
 const generalInfoDiv = document.querySelector('.general-info');
 const searchInput = document.querySelector('.searchBar');
 const submitButton = document.querySelector('.submit-btn');
@@ -81,8 +55,8 @@ function setCustomWeather(value){
         const currentCondition = data.current;
 
         
-        weatherCondition.textContent = `Condition : ${data.current.condition.text}`;
-        weatherLocation.textContent = `Weather in ${data.location.name}, ${data.location.country}`
+        weatherCondition.textContent = `${data.current.condition.text}`;
+        weatherLocation.textContent = `${data.location.name}, ${data.location.country}`
        
         checkedBoxFuction(currentCondition);
         weatherWindMph.textContent = `Wind : ${data.current.wind_kph} Km/h`
@@ -93,26 +67,6 @@ function setCustomWeather(value){
     })
 }
 
-/*function updateWeatherDisplay(obj){
-    const weatherFeelsLike = document.querySelector('.feels-like');
-    const weatherDegrees = document.querySelector('.degrees');
-    toggleButton.classList.add('celsius');
-
-        if (isCelsius) {
-            toggleButton.textContent = '°F';
-            weatherDegrees.textContent = `${obj.temp_f} °F`
-            weatherFeelsLike.textContent = `Feels like: ${obj.feelslike_f} °F`
-            toggleButton.classList.add('fahrenheit'); 
-            toggleButton.classList.remove('celsius');
-        } else {
-            toggleButton.textContent = '°C';
-            weatherFeelsLike.textContent = `Feels like: ${obj.feelslike_c} °C`
-            weatherDegrees.textContent = `${obj.temp_c} °C`
-            toggleButton.classList.add('celsius');
-            toggleButton.classList.remove('fahrenheit');  
-        }
-        checkbox.setAttribute('data-condition', JSON.stringify(obj));
-}*/
 
 function toggleDegrees(){
     isCelsius = !isCelsius;
