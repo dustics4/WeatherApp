@@ -1,5 +1,4 @@
 import Loader from "./modules/loader";
-
 const generalInfoDiv = document.querySelector('.general-info');
 const searchInput = document.querySelector('.searchBar');
 const submitButton = document.querySelector('.submit-btn');
@@ -39,36 +38,53 @@ function capitalizeFirstLetter(str){
 
 function clearSearch(){
     searchInput.value = "";
+}
 
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function setCustomWeather(value){
+    const loader = new Loader();
+    const MINIMUM_LOADING_TIME = 900; // minimum loading time in milliseconds
+    const startTime = Date.now();
+
+    getWeatherData(capitalizeFirstLetter(value))
+        .then(weatherData => {
+            const elapsedTime = Date.now() - startTime;
+            if (elapsedTime < MINIMUM_LOADING_TIME) {
+                return delay(MINIMUM_LOADING_TIME - elapsedTime).then(() => weatherData);
+            }
+            return weatherData;
+        })
+        .then(weatherData => {
+            const searchResult = document.querySelector('#main-weather-display');
+            searchResult.classList.add("active");
+
+            const weatherLocation = document.querySelector('.location');
+            const weatherCondition = document.querySelector('.condition');
+            const weatherDegrees = document.querySelector('.degrees');
+            const weatherFeelsLike = document.querySelector('.feels-like');
+            const weatherWindMph = document.querySelector('.wind-mph');
+            const weatherHumidity = document.querySelector('.humidity');
+            const currentCondition = weatherData.current;
+
+            weatherCondition.textContent = `${weatherData.current.condition.text}`;
+            weatherLocation.textContent = `${weatherData.location.name}, ${weatherData.location.country}`;
+
+            checkedBoxFuction(currentCondition);
+            weatherWindMph.textContent = `Wind : ${weatherData.current.wind_kph} Km/h`;
+            weatherHumidity.textContent = `Humidity : ${weatherData.current.humidity}`;
+            weatherIcon.src = weatherData.current.condition.icon;
+        })
+        .catch(err => {
+            alert(err);
+        })
+        .finally(() => {
+            loader.hide();
+            loader.remove();
+        });
     
-    const weatherData = getWeatherData(capitalizeFirstLetter(value));
-    weatherData.then((data) => {
-        const searchResult = document.querySelector('#main-weather-display');
-        searchResult.classList.add("active");
-
-        const weatherLocation = document.querySelector('.location');
-        const weatherCondition = document.querySelector('.condition');
-        const weatherDegrees = document.querySelector('.degrees');
-        const weatherFeelsLike = document.querySelector('.feels-like');
-        const weatherWindMph = document.querySelector('.wind-mph');
-        const weatherHumidity = document.querySelector('.humidity');
-        const currentCondition = data.current;
-
-        
-        weatherCondition.textContent = `${data.current.condition.text}`;
-        weatherLocation.textContent = `${data.location.name}, ${data.location.country}`
-       
-        checkedBoxFuction(currentCondition);
-        weatherWindMph.textContent = `Wind : ${data.current.wind_kph} Km/h`
-        weatherHumidity.textContent = `Humidity : ${data.current.humidity}`
-        weatherIcon.src = data.current.condition.icon;
-
-    }).catch((err) => {
-        alert(err);
-    })
 }
 
 
@@ -121,11 +137,9 @@ submitButton.addEventListener("click" ,  (e) => {
     if(searchInput.value === "")return;
     setCustomWeather(searchInput.value);
     clearSearch();
-    pageLoader();
 })
 
 document.addEventListener("DOMContentLoaded" , () =>{
     setCustomWeather("London");
     toggleSwitchEvent();
-    pageLoader();
 })

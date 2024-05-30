@@ -11,11 +11,13 @@ export default class Loader {
     }
 
     show() {
-        this.loader.style.visibility = 'visible';
+        const loader = document.querySelector('.loader');
+        loader.classList.remove("loader-hidden");
     }
 
     hide() {
-        this.loader.style.visibility = 'hidden';
+        const loader = document.querySelector('.loader');
+        loader.classList.add("loader-hidden");
     }
 
     remove() {
