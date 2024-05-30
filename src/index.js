@@ -1,3 +1,5 @@
+import Loader from "./modules/loader";
+
 const generalInfoDiv = document.querySelector('.general-info');
 const searchInput = document.querySelector('.searchBar');
 const submitButton = document.querySelector('.submit-btn');
@@ -41,6 +43,7 @@ function clearSearch(){
 }
 
 function setCustomWeather(value){
+    
     const weatherData = getWeatherData(capitalizeFirstLetter(value));
     weatherData.then((data) => {
         const searchResult = document.querySelector('#main-weather-display');
@@ -62,8 +65,22 @@ function setCustomWeather(value){
         weatherWindMph.textContent = `Wind : ${data.current.wind_kph} Km/h`
         weatherHumidity.textContent = `Humidity : ${data.current.humidity}`
         weatherIcon.src = data.current.condition.icon;
+
     }).catch((err) => {
         alert(err);
+    })
+}
+
+
+function pageLoader(){
+    window.addEventListener("load", () => {
+        const loader = document.querySelector('.loader');
+
+        loader.classList.add("loader-hidden");
+        loader.addEventListener("transitionend", () => {
+            loader.remove();
+        })
+
     })
 }
 
@@ -104,9 +121,11 @@ submitButton.addEventListener("click" ,  (e) => {
     if(searchInput.value === "")return;
     setCustomWeather(searchInput.value);
     clearSearch();
+    pageLoader();
 })
 
 document.addEventListener("DOMContentLoaded" , () =>{
     setCustomWeather("London");
     toggleSwitchEvent();
+    pageLoader();
 })
