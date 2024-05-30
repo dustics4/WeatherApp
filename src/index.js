@@ -87,20 +87,6 @@ function setCustomWeather(value){
     
 }
 
-
-function pageLoader(){
-    window.addEventListener("load", () => {
-        const loader = document.querySelector('.loader');
-
-        loader.classList.add("loader-hidden");
-        loader.addEventListener("transitionend", () => {
-            loader.remove();
-        })
-
-    })
-}
-
-
 function toggleDegrees(){
     isCelsius = !isCelsius;
     const currentCondition = JSON.parse(checkbox.getAttribute('data-condition'));
